@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 //import axios from 'axios';
-import { Route, Link } from 'react-router-dom';
+import { Route, NavLink,Switch, Redirect } from 'react-router-dom';
 import './Blog.css';
 import Posts from './Posts/Posts';
 import NewPost from './NewPost/NewPost';
+// import Post from './FullPost/FullPost';
 
 class Blog extends Component {
   
@@ -14,18 +15,22 @@ class Blog extends Component {
                 <header>
                     <nav>
                         <ul>
-                            <li><Link to= '/'>HOME</Link></li>
-                            <li><Link to={{
+                            <li><NavLink to= '/posts/' exact>HOME</NavLink></li>
+                            <li><NavLink to={{
                                 pathname: '/new-post',
                                 hash: '#submit',
                                 search: '?quick-submit=true'
-                            }}>NewPost</Link></li>
+                            }}>NewPost</NavLink></li>
                         </ul>
                     </nav>
                 </header>
                 {/* <Route path='/' exact render={() => <h1>Home</h1>} /> */}
-                <Route path='/' exact component={Posts} />
-                <Route path='/new-post' exact component = {NewPost} />
+                <Switch>
+                    <Route path='/new-post' exact component = {NewPost} />
+                    <Route path='/posts/'  component={Posts} />
+                    <Redirect from = "/" to='/posts'/>
+                </Switch>
+               
             </div>
         );
     }
